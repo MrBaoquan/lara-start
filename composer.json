@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mrba\\LaraStart": "src/"
+            "Mrba\\LaraStart\\": "src/"
         }
     },
     "extra": {
