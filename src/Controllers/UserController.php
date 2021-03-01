@@ -5,11 +5,11 @@ namespace Mrba\LaraStart\Controllers;
 use App\Http\Resources\User;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class UserController extends APIController
 {
     // 当前用户信息
     public function userinfo()
     {
-        return $this->responseJson(new User(Auth::user()));
+        //return $this->responseJson(new User(Auth::user()));
     }
 }

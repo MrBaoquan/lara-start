@@ -14,10 +14,6 @@ use Mrba\LaraStart\Controllers\AuthController;
 |
 */
 
-Route::get('/test', function () {
-    return 'test mrba start';
-});
-
 Route::get('/clearsession', function () {
     session()->forget('wechat.oauth_user.default');
 });
@@ -28,4 +24,5 @@ Route::group(['middleware' => ['wechat.mock']], function () {
 });
 
 // 使用微信授权登录代理 获取网页授权用户信息
-Route::any('/proxy/auth/wechat', [AuthController::class, 'ProxyAuthWechat'])->middleware('proxy.wechat.oauth');
+Route::any('/proxy/auth/wechat', [AuthController::class, 'ProxyAuthWechat'])
+    ->middleware('proxy.wechat.oauth');

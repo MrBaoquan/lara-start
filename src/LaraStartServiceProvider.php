@@ -8,7 +8,14 @@ class LaraStartServiceProvider extends ServiceProvider
 {
 
     protected $routeMiddleware = [
-        'wechat.mock' => Middleware\MockWechatOAuth::class
+        'wechat.mock' => Middleware\MockWechatOAuth::class,
+        'proxy.wechat.oauth' => Middleware\ProxyWechatOAuth::class
+    ];
+
+    protected $commands = [
+        Console\Commands\PublishCommand::class,
+        Console\Commands\InstallCommand::class,
+        Console\Commands\EnvCommand::class
     ];
 
     /**
@@ -18,7 +25,7 @@ class LaraStartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->commands($this->commands);
         $this->registerMiddleware();
     }
 
@@ -41,6 +48,8 @@ class LaraStartServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/larastart.php' => config_path('larastart.php')
         ]);
+
+        $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')]);
     }
 
     // 中间件注册
