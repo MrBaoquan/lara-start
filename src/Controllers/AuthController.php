@@ -3,12 +3,12 @@
 namespace Mrba\LaraStart\Controllers;
 
 use Mrba\LaraStart\Controllers\ApiResponse\APIErrorCode;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Mrba\LaraStart\Models\WXUser as User;
 
-class AuthController extends Controller
+class AuthController extends APIController
 {
     public function login(Request $request)
     {

@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mrba\LaraStart\Controllers\AuthController;
+use Mrba\LaraStart\Resources\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +16,6 @@ use Mrba\LaraStart\Controllers\AuthController;
 |
 */
 
-Route::get('/test', function () {
-    return 'test mrba start';
-});
-
 Route::get('/clearsession', function () {
     session()->forget('wechat.oauth_user.default');
 });
@@ -28,4 +26,13 @@ Route::group(['middleware' => ['wechat.mock']], function () {
 });
 
 // 使用微信授权登录代理 获取网页授权用户信息
-Route::any('/proxy/auth/wechat', [AuthController::class, 'ProxyAuthWechat'])->middleware('proxy.wechat.oauth');
+Route::any('/proxy/auth/wechat', [AuthController::class, 'ProxyAuthWechat'])
+    ->middleware('proxy.wechat.oauth');
+
+
+Route::group(['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum']], function () {
+    // example: 当前已认证用户信息
+    Route::get('/userinfo', function () {
+        return new User(Auth::user());
+    });
+});

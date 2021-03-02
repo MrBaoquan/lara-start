@@ -8,7 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Mrba\LaraStart\Controllers\ApiResponse\ApiResponse;
 
-class Controller extends BaseController
+class APIController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     use ApiResponse;
