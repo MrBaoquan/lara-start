@@ -8,6 +8,7 @@ class LaraStartServiceProvider extends ServiceProvider
 {
 
     protected $routeMiddleware = [
+        'wechat.oauth' => \Overtrue\LaravelWeChat\Middleware\OAuthAuthenticate::class,
         'wechat.mock' => Middleware\MockWechatOAuth::class,
         'proxy.wechat.oauth' => Middleware\ProxyWechatOAuth::class
     ];
