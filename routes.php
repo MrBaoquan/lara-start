@@ -11,13 +11,14 @@ Route::get('/clearsession', function () {
 });
 
 // 开启微信oauth授权登录代理
-Route::group(['middleware' => ['wechat.mock']], function () {
+Route::group(['middleware' => ['web', 'wechat.oauth:default,snsapi_userinfo']], function () {
     Route::any('/auth/wx', [AuthController::class, 'wechat']);
 });
 
 // 使用微信授权登录代理 获取网页授权用户信息
 Route::any('/proxy/auth/wx', [AuthController::class, 'ProxyAuthWechat'])
     ->middleware('proxy.wechat.oauth');
+
 
 Route::group(['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum']], function () {
     Route::any('/wx/jssdk', [WXController::class, 'JSSDK']);
