@@ -24,10 +24,10 @@ trait ApiResponse
         return $this;
     }
 
-    protected function responseError($errCode, $tips = '')
+    protected function responseError($errCode, $tips = null)
     {
-        $this->setErrorCode($errCode)
-            ->responseJson($tips ? $tips : APIErrorCode::$statusTexts[$errCode]);
+        return $this->setErrorCode($errCode)
+            ->responseJson(isset($tips) ? $tips : APIErrorCode::$statusTexts[$errCode]);
     }
 
     protected function responseJson($data)

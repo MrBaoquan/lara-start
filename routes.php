@@ -6,23 +6,12 @@ use Mrba\LaraStart\Controllers\AuthController;
 use Mrba\LaraStart\Controllers\UserController;
 use Mrba\LaraStart\Controllers\WXController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/clearsession', function () {
     session()->forget('wechat.oauth_user.default');
 });
 
 // 开启微信oauth授权登录代理
-Route::group(['middleware' => ['wechat.oauth']], function () {
+Route::group(['middleware' => ['wechat.mock']], function () {
     Route::any('/auth/wx', [AuthController::class, 'wechat']);
 });
 
@@ -34,5 +23,5 @@ Route::group(['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum']], funct
     Route::any('/wx/jssdk', [WXController::class, 'JSSDK']);
 
     // example: 当前已认证用户信息
-    Route::get('/userinfo', [UserController::class, 'userinfo']);
+    Route::post('/userinfo', [UserController::class, 'userinfo']);
 });

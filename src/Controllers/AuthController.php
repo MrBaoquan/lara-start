@@ -6,6 +6,7 @@ use Mrba\LaraStart\Controllers\ApiResponse\APIErrorCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Mrba\LaraStart\Models\WXUser as User;
 
 class AuthController extends APIController
@@ -41,7 +42,7 @@ class AuthController extends APIController
     {
         $input = $request->all();
         $openid = Arr::get($input, 'openid');
-        $user = User::where('openid', Arr::get($input, 'openid'))->first();
+        $user = config('larastart.users_model')::where('openid', Arr::get($input, 'openid'))->first();
 
         $appUrl = $request->query('redirect');
         if (!isset($appUrl)) {
@@ -49,7 +50,7 @@ class AuthController extends APIController
         }
 
         if (!isset($user)) {
-            $user = User::create([
+            $user = config('larastart.users_model')::create([
                 'name' => Arr::get($input, 'nickname', $openid),
                 'nick_name' => Arr::get($input, 'nickname', '新用户_' . substr($openid, -5)),
                 'email' => Arr::get($input, 'email', $openid . '@example.com'),
@@ -66,7 +67,7 @@ class AuthController extends APIController
             ->to('http://' . $appUrl . '?access_token=' . $this->createToken($user)->plainTextToken);
     }
 
-    private function createToken(User $user)
+    private function createToken($user)
     {
         $user->tokens()->delete();
         return $user->createToken('auth');
