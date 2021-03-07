@@ -17,17 +17,7 @@ class WXUser extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'openid',
-        'nick_name',
-        'country',
-        'province',
-        'city',
-        'gender'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.

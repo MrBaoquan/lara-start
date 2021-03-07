@@ -43,7 +43,7 @@ class AuthController extends APIController
         $input = $request->all();
         $openid = Arr::get($input, 'openid');
         $user = config('larastart.users_model')::where('openid', Arr::get($input, 'openid'))->first();
-
+        Log::info($input);
         $appUrl = $request->query('redirect');
         if (!isset($appUrl)) {
             return $this->responseError(APIErrorCode::InvalidParams);
