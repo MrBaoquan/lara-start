@@ -11,7 +11,7 @@ Route::get('/clearsession', function () {
 });
 
 // 开启微信oauth授权登录代理
-Route::group(['middleware' => ['web', 'wechat.oauth:default,snsapi_userinfo']], function () {
+Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
     Route::any('/auth/wx', [AuthController::class, 'wechat']);
 });
 
@@ -24,5 +24,6 @@ Route::group(['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum']], funct
     Route::any('/wx/jssdk', [WXController::class, 'JSSDK']);
 
     // example: 当前已认证用户信息
-    Route::post('/userinfo', [UserController::class, 'userinfo']);
+    Route::get('/userinfo', [UserController::class, 'userinfo']);
+    Route::post('/userinfo', [UserController::class, 'updateUserInfo']);
 });

@@ -21,6 +21,7 @@ class User extends JsonResource
             'country' => $this->country,
             'province' => $this->province,
             'city' => $this->city,
+            'avatar_url' => $this->avatar_url,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
